@@ -13,6 +13,7 @@ export default class TrafficSignals extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
+        console.log("PROPS", nextProps);
         let red = false, green = false, yellow = false;
         if(nextProps.signalData.nextStatus == 'RED') {
             red = true;
@@ -29,6 +30,7 @@ export default class TrafficSignals extends React.Component {
             yellow = true;
         }
 
+        console.log("setting state", red, green, yellow);
         this.setState({
             redOn: red,
             yellowOn: yellow,
@@ -40,7 +42,7 @@ export default class TrafficSignals extends React.Component {
       return (
           <div>
         <TrafficLight
-          Size="150"
+          Size={150}
           onRedClick={() => this.setState({ redOn: !this.state.redOn })}
           onYellowClick={() => this.setState({ yellowOn: !this.state.yellowOn })}
           onGreenClick={() => this.setState({ greenOn: !this.state.greenOn })}
