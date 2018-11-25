@@ -41,6 +41,10 @@ export default class TrafficSignals extends React.Component {
         console.log("COUNT::", count);
     }
 
+    removePassenger = (count) => {
+        console.log("COUNT::", count);
+    }
+
     render() {
         return (
             <div>
@@ -55,7 +59,9 @@ export default class TrafficSignals extends React.Component {
                     YellowOn={this.state.yellowOn}
                     GreenOn={this.state.greenOn}
                 />
-                <Passenger itemType={this.props.title === "Pedestrian Signal" ? "male" : "car"} addHandler={this.addPassenger} />
+                <Passenger itemType={this.props.title === "Pedestrian Signal" ? "male" : "car"} 
+                addHandler={this.addPassenger}
+                removeHandler={this.removePassenger} />
             </div>
         )
     }

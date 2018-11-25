@@ -24,6 +24,21 @@ export default class Passenger extends React.Component {
         this.props.addHandler(count);
     }
 
+    handleRemove = (e) => {
+        e.preventDefault();
+        let count = this.state.count;
+        // let index = this.state.items.length - 1;
+        // newItems = this.state.items.splice(0, 1);
+        // console.log("newItems::", newItems);
+        count = count - 1;
+        this.state.items.splice(0, 1)
+        this.setState((state, props) => ({
+            count: state.count - 1,
+            items: state.items
+          }));
+        this.props.removeHandler(count);
+    }
+
     render() {
       return (
         <div>
@@ -33,6 +48,7 @@ export default class Passenger extends React.Component {
             })}
             </div>
             <button onClick={this.handleClick}>ADD</button>
+            <button onClick={this.handleRemove}>REMOVE</button>
         </div>
       )
     }
