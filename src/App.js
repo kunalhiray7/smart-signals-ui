@@ -3,8 +3,15 @@ import axios from 'axios';
 import logo from './logo.svg';
 import { filter } from 'ramda';
 import './App.css';
-
 import TrafficSignals from './components/trafficSignals';
+
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMale, faFemale, faCar } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faMale)
+library.add(faFemale)
+library.add(faCar)
 
 class App extends Component {
 
@@ -26,15 +33,14 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+   clearInterval(this.interval);
+ }
 
   processResponse(response) {
     let pedestrianSignalData = filter(s => s.pedestrianSignal == true, response.signals)[0];
     let signalOneData = response.signals[0];
     let signalTwoData = response.signals[1];
 
-    console.log("pedestrianSignalData::", pedestrianSignalData);
     this.setState({
       pedestrianSignalData: pedestrianSignalData,
       signalOneData: signalOneData,
@@ -43,10 +49,8 @@ class App extends Component {
   }
 
   fetchSignalStatus() {
-    console.log("calling");
     axios.get(`http://localhost:6060/signals/v2`)
       .then(res => {
-        console.log("response::", res);
         this.processResponse(res.data);
       }).catch(error => console.log)
   }
@@ -57,8 +61,8 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <div className="vehicle-signal"><TrafficSignals signalData={this.state.signalOneData} title="Road Signal 1" /></div>
-          <div className="vehicle-signal"><TrafficSignals signalData={this.state.signalTwoData} title="Road Signal 2" /></div>
           <div className="vehicle-signal"><TrafficSignals signalData={this.state.pedestrianSignalData} title="Pedestrian Signal" /></div>
+          <div className="vehicle-signal"><TrafficSignals signalData={this.state.signalTwoData} title="Road Signal 2" /></div>
         </header>
       </div>
     );
