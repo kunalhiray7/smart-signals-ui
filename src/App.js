@@ -33,8 +33,8 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-   clearInterval(this.interval);
- }
+    clearInterval(this.interval);
+  }
 
   processResponse(response) {
     let pedestrianSignalData = filter(s => s.pedestrianSignal == true, response.signals)[0];
@@ -55,14 +55,48 @@ class App extends Component {
       }).catch(error => console.log)
   }
 
+  fetchSignalStatusFor(signalId, signalSent) {
+    axios.put(`http://localhost:6060/signals/${signalId}/${signalSent}`)
+      .then(res => {
+        this.processResponse(res.data);
+      }).catch(error => console.log)
+  }
+
+  updateSignalOne = (count) => {
+    this.fetchSignalStatusFor(1, count);
+  }
+
+  updateSignalTwo = (count) => {
+    this.fetchSignalStatusFor(2, count);
+  }
+
+  updatePedestrianSignal = (count) => {
+    this.fetchSignalStatusFor(3, count);
+  }
+
   render() {
     // this.fetchSignalStatus();
     return (
       <div className="App">
         <header className="App-header">
-          <div className="vehicle-signal"><TrafficSignals signalData={this.state.signalOneData} title="Road Signal 1" /></div>
-          <div className="vehicle-signal"><TrafficSignals signalData={this.state.pedestrianSignalData} title="Pedestrian Signal" /></div>
-          <div className="vehicle-signal"><TrafficSignals signalData={this.state.signalTwoData} title="Road Signal 2" /></div>
+          <div className="vehicle-signal">
+            <TrafficSignals
+              handleUpdate={this.updateSignalOne}
+              signalData={this.state.signalOneData}
+              title="Road Signal 1" />
+          </div>
+          <div className="vehicle-signal">
+            <TrafficSignals
+              handleUpdate={this.updatePedestrianSignal}
+              signalData={this.state.pedestrianSignalData}
+              title="Pedestrian Signal" />
+          </div>
+          <div className="vehicle-signal">
+            <TrafficSignals
+              handleUpdate={this.updateSignalTwo}
+              signalData={this.state.signalTwoData}
+              title="Road Signal 2" />
+          </div>
         </header>
       </div>
     );

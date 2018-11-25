@@ -39,10 +39,12 @@ export default class TrafficSignals extends React.Component {
 
     addPassenger = (count) => {
         console.log("COUNT::", count);
+        this.props.handleUpdate(count);
     }
 
     removePassenger = (count) => {
         console.log("COUNT::", count);
+        this.props.handleUpdate(count);
     }
 
     render() {

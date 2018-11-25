@@ -27,9 +27,6 @@ export default class Passenger extends React.Component {
     handleRemove = (e) => {
         e.preventDefault();
         let count = this.state.count;
-        // let index = this.state.items.length - 1;
-        // newItems = this.state.items.splice(0, 1);
-        // console.log("newItems::", newItems);
         count = count - 1;
         this.state.items.splice(0, 1)
         this.setState((state, props) => ({
